@@ -14,25 +14,7 @@ parser.add_argument('instance', metavar='I', type=str, help="The instance to lau
 args = parser.parse_args()
 info = vars(args)
 
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = printEnd)
-    # Print New Line on Complete
-    if iteration == total:
-        print()
-
-def maximum(max_value,value):
-    max_value[0] = value
-
 def launch(instance):
-    max_value = [0]
-
-    callback = {
-        "setProgress": lambda value: printProgressBar(value, max_value[0]),
-        "setMax": lambda value: maximum(max_value, value)
-    }
 
     directory = "instances/" + instance + "/" + instance + ".json"
 
@@ -40,9 +22,7 @@ def launch(instance):
         with open(directory) as jsonfile:
             instance_info = json.load(jsonfile)
 
-        print("Installing Minecraft...")
-        minecraft_launcher_lib.install.install_minecraft_version(instance_info['version'], "instances/" + instance + "/", callback=callback)
-        print("Install complete, logging in...")
+        print("Logging in...")
         login_info = minecraft_launcher_lib.account.login_user(info['username'], info['password'])
 
         try:
