@@ -11,12 +11,12 @@ subparsers = parser.add_subparsers(dest='subparser_name')
 launch_parser = subparsers.add_parser('launch', help="Launches an instance.")
 create_parser = subparsers.add_parser('create', help="Creates an instance.")
 
-launch_parser.add_argument('username', metavar='U', type=str, help="Your Minecraft e-mail or legacy username.")
-launch_parser.add_argument('password', metavar='P', type=str, help="Your Minecraft password")
-launch_parser.add_argument('instance', metavar='I', type=str, help="The instance to launch.")
+launch_parser.add_argument('username', metavar='USER', type=str, help="Your Minecraft e-mail or legacy username.")
+launch_parser.add_argument('password', metavar='PASSWORD', type=str, help="Your Minecraft password")
+launch_parser.add_argument('instance', metavar='INSTANCE', type=str, help="The instance to launch.")
 
-create_parser.add_argument('name', metavar='N', type=str, help="A unique name for the instance.")
-create_parser.add_argument('version', metavar='V', type=str, help="The Minecraft version for the instance.")
+create_parser.add_argument('name', metavar='NAME', type=str, help="A unique name for the instance.")
+create_parser.add_argument('version', metavar='VERSION', type=str, help="The Minecraft version for the instance.")
 
 args = parser.parse_args()
 info = vars(args)
