@@ -25,7 +25,7 @@ info = vars(args)
 
 def launch(instance):
 
-    directory = "instances/" + instance + "/" + instance + ".json"
+    directory = os.path.join("instances", instance, instance + ".json")
 
     if os.path.exists(directory):
         with open(directory) as jsonfile:
@@ -74,17 +74,17 @@ def create_instance(name, version):
     max_value = [0]
     if not os.path.exists("instances"):
         os.mkdir("instances")
-    if os.path.exists("instances/" + name):
+    if os.path.exists(os.path.join("instances", name)):
         print("This instance name is already in use!")
         exit()
     else:
-        os.mkdir("instances/" + name)
-        open("instances/" + name + "/" + name + ".json", "x")
+        os.mkdir(os.path.join("instances", name))
+        open(os.path.join("instances", name, name + ".json"))
         data = {
             "name": name,
             "version": version
         }
-        with open("instances/" + name + "/" + name + ".json", "w") as outfile:
+        with open(os.path.join("instances", name, name + ".json"), "w") as outfile:
             json.dump(data, outfile)
 
         callback = {

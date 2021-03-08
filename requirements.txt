@@ -1,0 +1,1 @@
+minecraft_launcher_lib ~= 2.1
