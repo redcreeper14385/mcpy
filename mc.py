@@ -83,7 +83,7 @@ def create_instance(name, version):
         exit()
     else:
         os.mkdir(os.path.join("instances", name))
-        open(os.path.join("instances", name, name + ".json"))
+        open(os.path.join("instances", name, name + ".json"), "x")
         data = {
             "name": name,
             "version": version
@@ -116,7 +116,15 @@ def delete_instance(name):
     else:
         print("Invalid confirmation response! Aborting...")
 
-
+print("""                                                 
+  _ __ ___   ___ _ __  _   _ 
+ | '_ ` _ \ / __| '_ \| | | |
+ | | | | | | (__| |_) | |_| |
+ |_| |_| |_|\___| .__/ \__, |
+                | |     __/ |
+                |_|    |___/ 
+""")
+print("Welcome to mcpy 0.2.1 BETA!")
 try:
     if info['subparser_name'] == 'create':
         create_instance(info['name'], info['version'])
