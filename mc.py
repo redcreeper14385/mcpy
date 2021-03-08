@@ -20,7 +20,7 @@ launch_parser.add_argument('instance', metavar='INSTANCE', type=str, help="The i
 create_parser.add_argument('name', metavar='NAME', type=str, help="A unique name for the instance.")
 create_parser.add_argument('version', metavar='VERSION', type=str, help="The Minecraft version for the instance.")
 
-delete_parser.add_argument('name', metavar='NAME', type=str, help="The name of the instance to delete.")
+delete_parser.add_argument('instance', metavar='INSTANCE', type=str, help="The name of the instance to delete.")
 
 args = parser.parse_args()
 info = vars(args)
@@ -131,7 +131,7 @@ try:
     elif info['subparser_name'] == 'launch':
         launch(info['instance'])
     elif info['subparser_name'] == 'delete':
-        delete_instance(info['name'])
+        delete_instance(info['instance'])
     else:
         print("Please provide a valid subcommand!")
 except KeyError:
