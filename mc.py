@@ -1,4 +1,5 @@
 import os
+import shutil
 
 import minecraft_launcher_lib
 import subprocess
@@ -10,6 +11,7 @@ subparsers = parser.add_subparsers(dest='subparser_name')
 
 launch_parser = subparsers.add_parser('launch', help="Launches an instance.")
 create_parser = subparsers.add_parser('create', help="Creates an instance.")
+delete_parser = subparsers.add_parser('delete', help="Deletes an instance.")
 
 launch_parser.add_argument('username', metavar='USER', type=str, help="Your Minecraft e-mail or legacy username.")
 launch_parser.add_argument('password', metavar='PASSWORD', type=str, help="Your Minecraft password")
@@ -17,6 +19,8 @@ launch_parser.add_argument('instance', metavar='INSTANCE', type=str, help="The i
 
 create_parser.add_argument('name', metavar='NAME', type=str, help="A unique name for the instance.")
 create_parser.add_argument('version', metavar='VERSION', type=str, help="The Minecraft version for the instance.")
+
+delete_parser.add_argument('name', metavar='NAME', type=str, help="The name of the instance to delete.")
 
 args = parser.parse_args()
 info = vars(args)
@@ -96,12 +100,30 @@ def create_instance(name, version):
         minecraft_launcher_lib.install.install_minecraft_version(version,
                                                                  "instances/" + name + "/", callback=callback)
 
+def delete_instance(name):
+    response = input("Are you sure you would like to delete the instance: " + name + "? This will remove all your data for that instance. [y/n] ")
+    if response == "y":
+        directory = os.path.join("instances", name, name + ".json")
+        if os.path.exists(directory):
+            print("Deleting instance...")
+            shutil.rmtree(os.path.join("instances", name))
+            print("Instance deleted!")
+        else:
+            print("This instance is invalid or does not exist!")
+    elif response == "n":
+        print("Deletion cancelled. Aborting...")
+        quit()
+    else:
+        print("Invalid confirmation response! Aborting...")
+
 
 try:
     if info['subparser_name'] == 'create':
         create_instance(info['name'], info['version'])
     elif info['subparser_name'] == 'launch':
         launch(info['instance'])
+    elif info['subparser_name'] == 'delete':
+        delete_instance(info['name'])
     else:
         print("Please provide a valid subcommand!")
 except KeyError:
